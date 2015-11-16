@@ -71,7 +71,7 @@ init -1 python hide:
         ## The background of the main menu. This can be a color
         ## beginning with '#', or an image filename. The latter
         ## should take up the full height and width of the screen.
-        mm_root = "#A84A3E",
+        mm_root = "main_menu",
 
         ## The background of the game menu. This can be a color
         ## beginning with '#', or an image filename. The latter
@@ -261,6 +261,14 @@ init -1 python hide:
     ## Nombre del directorio en el cual se almacenan los datos del juego.
     ## (Debe ajustarse al inicio, antes de los otros bloques 'init', para
     ## que la información persistente pueda ser encontrada por el código 'init'.)
+    
+image main_menu:
+    contains:
+        "#000"
+    contains:
+        "mainBackground.jpg"
+        size(800, 600)
+
 python early:
     config.save_directory = "GamePolitica-1447248579"
 

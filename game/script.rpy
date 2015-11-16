@@ -8,21 +8,21 @@
 
 image bg oficina1:
     "oficina1.jpg"
-    size(800, 600)
+    size(config.screen_width, config.screen_height)
 
-image secretaria1:
+image secretary women1:
     "secretaria1.png"
     size(265, 410)
 
 # Declare characters used by this game.
 # - Declara los personajes usados en el juego como en el
 #   ejemplo.
-define e = Character('La secre', color="#c8ffc8")
+define e = Character('Daniela Perez', color="#c8ffc8")
 
 init python:
     casos = [
-        ("caso_1", _("Caso 1"), "Mierda"),
-        ("caso_2", _("Caso 2 - RAMO"), "RAMO"),
+        ("caso_1", _("Cultivos SAYONARA"), "1"),
+        ("caso_2", _("Caso 2 - RAMO"), "2"),
     ]
 
 screen casos:
@@ -56,20 +56,33 @@ screen casos:
 # - El juego comienza aquí.
 label start:
     scene bg oficina1
-    show secretaria1
+    show secretary women1 at right
     with dissolve
-    e "Hola"
+    e "Hola, bienvenido a (Nombre del juego) Donde ayudamos a diferentes empresas a salir de diferentes crisis."
+    
     
     window show
     
-    e "Bienvenido"
+    e "A continuacion tendras que escoger una de las siguientes empresas de la cual te haras cargo como gerente de ella."
+    e "Antes de empezar necesitaremos tu nombre"
     
     $ username = ""
     $ user = DynamicCharacter("username", color=(192, 64, 64, 255))
     $ username = renpy.input("Tu nombre")
-    user "Hola soy %(username)s."
-    e "Ok"
+    #user "%(username)s."
+    e "Mucho gusto %(username)s."
+    e "Listo empecemos por favor escoge una de estas empresas"
     
+    $ casos_adjustment = ui.adjustment()
+    call screen casos(adj = casos_adjustment)
+    
+    if _return is False:
+        jump end
+    
+    call expression _return
+    return
+    
+label start_2:
     $ casos_adjustment = ui.adjustment()
     call screen casos(adj = casos_adjustment)
     
