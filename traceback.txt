@@ -3,22 +3,28 @@
 While running game code:
   File "game/script.rpy", line 82, in script call
     call expression _return
-  File "game/script.rpy", line 82, in script call
-    call expression _return
-ScriptError: could not find label 'caso_2'.
+  File "game/caso_1.rpy", line 62, in script
+    if crisis1_sol and crisis2_sol and crisis3_sol and crisis4_sol:
+  File "game/caso_1.rpy", line 62, in <module>
+    if crisis1_sol and crisis2_sol and crisis3_sol and crisis4_sol:
+NameError: name 'crisis1_sol' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/script.rpy", line 82, in script call
     call expression _return
-  File "C:\Program Files (x86)\RenPy\renpy-6.99.7-sdk\renpy\ast.py", line 1306, in execute
-    rv = renpy.game.context().call(label, return_site=self.next.name)
-  File "game/script.rpy", line 82, in script call
-    call expression _return
-  File "C:\Program Files (x86)\RenPy\renpy-6.99.7-sdk\renpy\script.py", line 843, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label 'caso_2'.
+  File "game/caso_1.rpy", line 62, in script
+    if crisis1_sol and crisis2_sol and crisis3_sol and crisis4_sol:
+  File "C:\Program Files (x86)\RenPy\renpy-6.99.7-sdk\renpy\ast.py", line 1640, in execute
+    if renpy.python.py_eval(condition):
+  File "C:\Program Files (x86)\RenPy\renpy-6.99.7-sdk\renpy\python.py", line 1489, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "C:\Program Files (x86)\RenPy\renpy-6.99.7-sdk\renpy\python.py", line 1484, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/caso_1.rpy", line 62, in <module>
+    if crisis1_sol and crisis2_sol and crisis3_sol and crisis4_sol:
+NameError: name 'crisis1_sol' is not defined
 
 Windows-8-6.2.9200
 Ren'Py 6.99.7.858

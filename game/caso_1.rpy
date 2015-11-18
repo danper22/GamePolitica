@@ -1,14 +1,6 @@
 #begin characters
 define l = Character(_("Esperanza"), color="#ffcccc")
 
-screen caso_1_imagemap:
-    imagemap:
-        auto "imageMapSayonara_%s.jpg"
-
-        hotspot (8, 200, 78, 78) action Return("swimming") alt "Swimming"
-        hotspot (204, 50, 78, 78) action Return("science") alt "Science"
-        hotspot (452, 79, 78, 78) action Return("art") alt "Art"
-        hotspot (602, 316, 78, 78) action Return("go home") alt "Go Home"
 
 init python:
     def stats_frame(name, hp, maxhp, **properties):
@@ -38,7 +30,7 @@ init python:
 
 
         
-label fight(php=3):
+label fight_1(php=3):
     $ stats_frame(username, int(php), 3, xalign=.02, yalign=.05)
     return
 
@@ -67,12 +59,12 @@ label caso_1:
             jump start_2
 
 label iniciar_caso1:
-    if crisis1_sol and crisis2_sol and crisis3_sol and crisis4_sol:
+    if crisis1_sol is True and crisis2_sol is True and crisis3_sol is True and crisis4_sol is True:
         l "Felicidades la empresa ha atrevasado todas estas crisis gracias a tus acertadas decisiones"
         return
-    call fight(vidas)# from _call_fight_1
+    call fight_1(vidas)# from _call_fight_1
     if vidas == 0:
-        l "Has perdido por tu culpa la empresa quebro y me toca prostituirme para sostener mi hogar putoooo"
+        l "Has perdido"
         return
     
     user "Que hay pendiente por hacer?"
@@ -80,7 +72,7 @@ label iniciar_caso1:
     #window hide None
     #call screen caso_1_imagemap
     #window show None
-    call fight(vidas)
+    call fight_1(vidas)
     l "Si %(username)s actualmente tenemos los siguientes problemas"
     
     $ opcion = 0
@@ -100,7 +92,20 @@ label iniciar_caso1:
             else:
                 l "No te preocupes, este problema ya lo has solucionado."
                 jump iniciar_caso1
-
+        "Crisis de mercado y guerra de precios":
+            if crisis3_sol is False:
+                $ cual_crisis = 3
+                jump crisis_3
+            else:
+                l "No te preocupes, este problema ya lo has solucionado."
+                jump iniciar_caso1
+        "Demando por Dumping":
+            if crisis4_sol is False:
+                $ cual_crisis = 4
+                jump crisis_4
+            else:
+                l "No te preocupes, este problema ya lo has solucionado."
+                jump iniciar_caso1
 label crisis_1:
     if opcion == 0:
         l "%(username)s la empresa se esta viendo afectada a causa del cambio de las condiciones macroeconomicas del pais y la llegada de la revaluación del peso"
@@ -141,6 +146,44 @@ label crisis_2:
         l "Muy bien, el prestamo contribuyo a recuperar gran parte de la infraestructura y a aumentar la producción"
         l "El fenomeno natural fue afrontado satisfactoriamente"
         $ crisis2_sol = True
+    jump iniciar_caso1
+    
+label crisis_3:
+    if(opcion == 0):
+        l "%(username)s la empresa esta siendo afectada por una guerra de precios debido a que el sector floricultor en Colombia está creciendo de manera acelerada..."
+        l "La situación es que se está presentando una sobre oferta en el mercado, una saturación de flores para y para poder competir en el mercado internacional habria que bajar los precios."
+        l "Toma la mejor decisión para superar esta crisis"
+        menu:
+            "Ampliacion del portafolio de productos":
+                jump ampliacion_portafolio
+            "Aumentar la productividad y reducir costos":
+                jump aumentar_productividad
+            "Generar valor agregado":
+                jump generar_valor
+    if opcion != 5:
+        l "Lo lamento, la estrategia llevada a cabo para solucionar esta crisis fue fallida. Los propietarios estan muy "
+        $ vidas = vidas - 1
+    else:
+        l "Muy bien, la empresa salio bien librada de esto sin sacrificar costos"
+        $ crisis3_sol = True
+    jump iniciar_caso1
+    
+label crisis_4:
+    if(opcion == 0):
+        l "%(username)s nuestra empresa esta ganando terreno en Estados Unidos, pero al mismo tiempo los productores locales de California y Florida..."
+        l "... Una asociación de floricultores norteamericanos han demandado nuestra empresa por dumping. "
+        l "Necesitamos tomar una decisión lo más pronto posible."
+        menu:
+            "Proceso Jurídico":
+                jump proceso_juridico
+            "Generar valor agregado":
+                jump generar_valor            
+    if opcion != 8:
+        l "Lo siento, la decision que has tomado no ha sido satisfactoria y la demanda sigue en pie"
+        $ vidas = vidas - 1
+    else:
+        l "Muy bien, la demanda ha sido afrontada correctamente y se llego a un acuerdo con los comerciantes locales"
+        $ crisis4_sol = True
     jump iniciar_caso1
     
 label ampliacion_portafolio:
@@ -233,6 +276,38 @@ label prestamo:
     menu:
         "Si":
             $ opcion = 6
+        "No":
+            user "Me podrias repetir las opciones"
+    if cual_crisis == 1:
+        jump crisis_1
+    elif cual_crisis == 2:
+        jump crisis_2
+    elif cual_crisis == 3:
+        jump crisis_3
+    elif cual_crisis == 4:
+        jump crisis_4
+label aumentar_productividad:
+    l "Por medio de esta estrategia elevaras la producción de la empresa a costas de las utilidades actuales de la empresa reduciendo los costos"
+    l "Quieres hacer esto?"
+    menu:
+        "Si":
+            $ opcion = 7
+        "No":
+            user "Me podrias repetir las opciones"
+    if cual_crisis == 1:
+        jump crisis_1
+    elif cual_crisis == 2:
+        jump crisis_2
+    elif cual_crisis == 3:
+        jump crisis_3
+    elif cual_crisis == 4:
+        jump crisis_4
+label proceso_juridico:
+    l "Contrataras a un grupo de abogados para que atiendan este caso, esto conlleva un gasto imprevisto para la empresa"
+    l "Quieres hacer esto?"
+    menu:
+        "Si":
+            $ opcion = 8
         "No":
             user "Me podrias repetir las opciones"
     if cual_crisis == 1:

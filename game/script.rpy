@@ -60,7 +60,6 @@ label start:
     with dissolve
     e "Hola, bienvenido a (Nombre del juego) Donde ayudamos a diferentes empresas a salir de diferentes crisis."
     
-    
     window show
     
     e "A continuacion tendras que escoger una de las siguientes empresas de la cual te haras cargo como gerente de ella."
